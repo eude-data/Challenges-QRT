@@ -1,4 +1,4 @@
-# 📈 QRT Data Challenge — Prédiction de Rendements Boursiers
+# 📈 QRT Data Challenge - Prédiction de Rendements Boursiers
 
 **M2 ISIFAR · Université Paris Cité · 2025**
 
