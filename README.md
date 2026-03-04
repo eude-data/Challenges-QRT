@@ -1,8 +1,8 @@
-# 📈 QRT Data Challenge — Prédiction de Rendements Boursiers
+# 📈 QRT Data Challenge - Prédiction de Rendements Boursiers
 
 **M2 ISIFAR · Université Paris Cité · 2025**
 
-Ce projet s'inscrit dans le cadre du QRT/ENS Data Challenge. L'objectif est de prédire les rendements futurs de 50 actions à partir de leur historique sur 753 jours de trading. Plutôt que d'appliquer une seule méthode, j'ai choisi de comparer trois familles d'approches très différentes — ce qui permet de mieux comprendre pourquoi la prédiction de rendements est un problème difficile.
+Ce projet s'inscrit dans le cadre du QRT/ENS Data Challenge. L'objectif est de prédire les rendements futurs de 50 actions à partir de leur historique sur 753 jours de trading. Plutôt que d'appliquer une seule méthode, j'ai choisi de comparer trois familles d'approches très différentes - ce qui permet de mieux comprendre pourquoi la prédiction de rendements est un problème difficile.
 
 ---
 
@@ -19,7 +19,7 @@ Ce projet s'inscrit dans le cadre du QRT/ENS Data Challenge. L'objectif est de p
 Avant de modéliser, j'ai d'abord regardé les données de près :
 
 - Les rendements suivent une distribution quasi-normale, légèrement leptokurtique (queues épaisses)
-- Les tests ADF montrent que **49 actions sur 50 sont stationnaires** (I(0)) — les séries se comportent comme un bruit blanc
+- Les tests ADF montrent que **49 actions sur 50 sont stationnaires** (I(0)) - les séries se comportent comme un bruit blanc
 - La matrice de corrélation révèle quelques clusters d'actions fortement liées
 
 Ce constat initial est important : si les séries sont proches d'un bruit blanc, les modèles de séries temporelles classiques vont avoir du mal.
@@ -34,8 +34,8 @@ L'idée centrale est de chercher une matrice *A* orthonormale (A⊤A = I) qui pr
 
 On a testé deux variantes :
 
-- **V1 — beta vecteur partagé** : un seul vecteur β pour toutes les actions. Simple mais peu flexible.
-- **V2 — beta matrice par action** : chaque action a ses propres coefficients. Plus expressif, gain significatif sur la métrique.
+- **V1 - beta vecteur partagé** : un seul vecteur β pour toutes les actions. Simple mais peu flexible.
+- **V2 - beta matrice par action** : chaque action a ses propres coefficients. Plus expressif, gain significatif sur la métrique.
 
 La recherche de la meilleure matrice A se fait par tirage aléatoire (Monte Carlo sur la variété de Stiefel), ce qui donne de bons résultats même sans gradient.
 
