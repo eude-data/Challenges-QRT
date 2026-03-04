@@ -4,7 +4,7 @@
 
 Ce projet s'inscrit dans le cadre du QRT/ENS Data Challenge. L'objectif est de prédire les rendements futurs de 50 actions à partir de leur historique sur 753 jours de trading. Plutôt que d'appliquer une seule méthode, j'ai choisi de comparer trois familles d'approches très différentes — ce qui permet de mieux comprendre pourquoi la prédiction de rendements est un problème difficile.
 
----
+
 
 ## 📦 Données
 
@@ -12,7 +12,7 @@ Ce projet s'inscrit dans le cadre du QRT/ENS Data Challenge. L'objectif est de p
 - `Y_train` : rendements cibles sur 504 jours (labels)
 - La fenêtre de prédiction est de 250 jours : pour prédire le rendement au jour *t*, on utilise les 250 jours précédents.
 
----
+
 
 ## 🔍 Analyse exploratoire
 
@@ -24,7 +24,7 @@ Avant de modéliser, j'ai d'abord regardé les données de près :
 
 Ce constat initial est important : si les séries sont proches d'un bruit blanc, les modèles de séries temporelles classiques vont avoir du mal.
 
----
+
 
 ## ⚙️ Méthodes comparées
 
@@ -53,22 +53,22 @@ Résultat : les deux modèles produisent une métrique cosinus proche de zéro. 
 Seul modèle non linéaire du projet. Plutôt que d'utiliser les rendements bruts, on construit des features résumant chaque fenêtre de 250 jours :
 
 | Feature | Description |
-|---|---|
+|||
 | Moyenne 250j | Tendance longue période |
 | Volatilité 250j | Niveau de risque |
-| Momentum 20j | Tendance récente |
-| Momentum 5j | Court terme |
-| Momentum 1j | Signal immédiat |
+| Moyenne 20j | Tendance récente |
+| Moyenne 5j | Court terme |
+| Moyenne 1j | Signal immédiat |
 | Corrélation moyenne | Dépendance avec les autres actions |
 
 Le Random Forest est entraîné en multi-output (50 actions simultanément) et évalué sur un test set indépendant.
 
----
+
 
 ## 📊 Résultats
 
 | Méthode | Métrique cosinus | Évaluation |
-|---|---|---|
+||||
 | Stiefel V1 | ~0.043 | Train |
 | Stiefel V2 | ~0.145 | Train |
 | ARMA/ARIMA | -0.006 | Test |
@@ -79,7 +79,7 @@ La métrique cosinus mesure l'alignement directionnel entre les rendements préd
 
 Les métriques faibles ne signifient pas que les modèles sont mal construits — elles reflètent la difficulté intrinsèque de la prédiction de rendements financiers. Le Random Forest est le seul modèle évalué sur test avec un signal positif réel, porté principalement par les features de momentum court terme (1j, 5j).
 
----
+
 
 ## 🚀 Pistes d'amélioration
 
@@ -87,7 +87,7 @@ Les métriques faibles ne signifient pas que les modèles sont mal construits �
 - Modèle **LSTM** pour capturer des dépendances temporelles longues
 - Features supplémentaires : volatilité réalisée, ratio de Sharpe glissant, bêta de marché
 
----
+
 
 ## 🛠️ Stack technique
 
