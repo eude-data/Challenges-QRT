@@ -8,7 +8,7 @@ Tout le code est dans `Final_projet_code.ipynb`.
 
 - `X_train` : rendements journaliers de 50 actions sur 754 jours.
 - `Y_train` : rendements à prédire, sur 504 jours.
-- Pour prédire le rendement du jour $t$, on utilise les 250 jours précédents.
+- Pour prédire le rendement du jour t, on utilise les 250 jours précédents.
 
 Pour les méthodes 2 et 3, les 504 jours à prédire sont coupés en deux : 403 jours d'entraînement et 101 jours de test.
 
@@ -22,7 +22,7 @@ Des séries stationnaires et proches d'un bruit blanc laissent peu de place aux 
 
 ## Méthode 1 : facteurs orthonormaux (variété de Stiefel)
 
-On cherche une matrice $A$ de taille 250 x 10, à colonnes orthonormées ($A^\top A = I$), qui résume la fenêtre des 250 derniers rendements en 10 facteurs. On régresse ensuite le rendement du lendemain sur ces facteurs.
+On cherche une matrice A de taille 250 x 10, à colonnes orthonormées (AᵀA = I), qui résume la fenêtre des 250 derniers rendements en 10 facteurs. On régresse ensuite le rendement du lendemain sur ces facteurs.
 
 La qualité d'une prédiction est mesurée par la similarité cosinus entre le vecteur des rendements prédits et celui des rendements réels, moyennée sur les jours :
 
@@ -30,7 +30,7 @@ $$M = \frac{1}{T} \sum_{t=1}^{T} \frac{\langle S_t, R_t \rangle}{\lVert S_t \rVe
 
 Elle est comprise entre -1 et 1, et elle est positive quand le modèle trouve en moyenne la bonne direction.
 
-Les matrices $A$ sont tirées au hasard (100 tirages, orthonormalisés par Gram-Schmidt) et on garde la meilleure. Deux variantes :
+Les matrices A sont tirées au hasard (100 tirages, orthonormalisés par Gram-Schmidt) et on garde la meilleure. Deux variantes :
 
 - V1 : les mêmes coefficients pour toutes les actions.
 - V2 : des coefficients propres à chaque action.
@@ -39,7 +39,7 @@ Ces scores sont calculés sur les données d'entraînement, et V2 a beaucoup plu
 
 ## Méthode 2 : ARMA et VAR
 
-- ARMA : un modèle par action, avec des ordres $p$ et $q$ entre 0 et 2 choisis par AIC. La seule série non stationnaire est différenciée une fois.
+- ARMA : un modèle par action, avec des ordres p et q entre 0 et 2 choisis par AIC. La seule série non stationnaire est différenciée une fois.
 - VAR sur ACP : on réduit les 50 séries à 19 composantes principales (80 % de la variance), puis on estime un VAR sur ces composantes.
 
 Pour le VAR, les critères AIC, BIC et HQ choisissent tous un retard de 0 : les rendements passés n'apportent rien. On impose un retard de 1 pour pouvoir prédire. Les deux modèles donnent une métrique cosinus proche de zéro sur le test.
